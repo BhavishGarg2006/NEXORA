@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Organizer Portal – Nexora</title>
+  <link rel='preconnect' href='https://fonts.googleapis.com'>
+  <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+  <link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap' rel='stylesheet'>
+  <link rel='stylesheet' href='style2.css'>
+</head>
+<body>
+
+  <!-- ── Toast Container ── -->
+  <div id="toast-container"></div>
+
+  <!-- ──────────────────────────────────────────────────── -->
+  <!-- NAVBAR                                              -->
+  <!-- ──────────────────────────────────────────────────── -->
+  <nav class='navbar org-navbar'>
+    <div class='logo'><img src="LOGO_NEXORA.png" alt="Nexora" height="40" width="48" style="vertical-align:middle;background:white;border-radius:8px;padding:2px;"> <span class="org-tag">Organizer</span></div>
+
+    <div class="nav-auth">
+      <a href="index.html#experiences" class="login-btn org-back-link">📸 Experiences</a>
+      <a href="index.html" class="login-btn org-back-link">← Main Site</a>
+      <div id="org-user-badge" class="user-badge" style="display:none;">
+        <span id="org-user-name">Organizer</span>
+        <button id="org-logout-btn" class="badge-action logout" title="Logout">⏻</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- ACCESS GATE (shown when not logged in as organizer)   -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section id="access-gate" class="access-gate-wrap">
+    <div class="access-gate-card">
+      <div class="access-gate-icon">🔒</div>
+      <h1>Organizer Portal</h1>
+      <p class="access-gate-sub">
+        This area is restricted to authorized event organizers.
+        Log in with your organizer account. New organizers need the <strong>Organizer Access Code</strong> from the Nexora admin team to sign up.
+      </p>
+
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab active" data-mode="login">Login</button>
+        <button type="button" class="auth-tab" data-mode="signup">Sign Up</button>
+      </div>
+
+      <form id="organizer-login-form" novalidate>
+        <div class="form-group" id="org-name-group" style="display:none;">
+          <label for="org-name">Full Name</label>
+          <input type="text" id="org-name" placeholder="Name" autocomplete="name" />
+          <span class="field-error" id="org-name-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="org-email">Organizer Email</label>
+          <input type="email" id="org-email" placeholder="you@college.edu" autocomplete="email" />
+          <span class="field-error" id="org-email-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="org-password">Password</label>
+          <input type="password" id="org-password" placeholder="At least 6 characters" autocomplete="current-password" />
+          <span class="field-error" id="org-password-error"></span>
+        </div>
+        <div class="form-group" id="org-code-group" style="display:none;">
+          <label for="org-code">Organizer Access Code</label>
+          <input type="password" id="org-code" placeholder="Code from the Nexora admin team" autocomplete="off" />
+          <span class="field-error" id="org-code-error"></span>
+        </div>
+        <span class="field-error" id="org-form-error"></span>
+        <button type="submit" class="register-btn" id="org-submit-btn">Login</button>
+      </form>
+
+      <p class="access-gate-note">
+        Need a code? Contact your club/department admin, or
+        <a href="index.html#contact">reach out to Nexora support</a> to be onboarded as an organizer.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- DASHBOARD (shown once authorized)                      -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section id="org-dashboard" class="org-dashboard" style="display:none;">
+
+    <div class="org-welcome-banner">
+      <div>
+        <p class="org-welcome-label">Welcome back,</p>
+        <h1 id="org-welcome-name">Organizer</h1>
+      </div>
+      <button class="btn primary" id="open-create-event-btn">+ Create New Event</button>
+    </div>
+
+    <div class="org-stats-row">
+      <div class="org-stat-card">
+        <div class="org-stat-number" id="stat-events-created">0</div>
+        <div class="org-stat-label">Events Created</div>
+      </div>
+      <div class="org-stat-card">
+        <div class="org-stat-number" id="stat-total-registrations">0</div>
+        <div class="org-stat-label">Total Registrations</div>
+      </div>
+      <div class="org-stat-card">
+        <div class="org-stat-number" id="stat-total-seats">0</div>
+        <div class="org-stat-label">Total Seats Offered</div>
+      </div>
+    </div>
+
+    <div class='events-section'>
+      <div class='section-header'>
+        <h2>My Events</h2>
+      </div>
+      <div class='event-grid' id="my-events-grid">
+        <!-- rendered by JS -->
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- MODALS                                                 -->
+  <!-- ══════════════════════════════════════════════════════ -->
+
+  <!-- ── Create / Edit Event Modal ── -->
+  <div class="modal" id="create-event-modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-box modal-box--wide">
+      <button class="modal-close">✕</button>
+      <h2 class="modal-title" id="ce-modal-title">Create New Event</h2>
+      <form id="create-event-form" novalidate>
+        <input type="hidden" id="ce-editing-id" value="" />
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ce-title">Event Title</label>
+            <input type="text" id="ce-title" placeholder="AI Innovation Hackathon" />
+            <span class="field-error" id="ce-title-error"></span>
+          </div>
+          <div class="form-group">
+            <label for="ce-type">Event Type</label>
+            <select id="ce-type">
+              <option value="">Select type…</option>
+              <option value="Workshop">Workshop</option>
+              <option value="Hackathon">Hackathon</option>
+              <option value="Seminar">Seminar</option>
+              <option value="Paid Event">Paid Event</option>
+              <option value="Trip">Trip (paid)</option>
+            </select>
+            <span class="field-error" id="ce-type-error"></span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ce-date">Start Date</label>
+            <input type="date" id="ce-date" />
+            <span class="field-error" id="ce-date-error"></span>
+          </div>
+          <div class="form-group">
+            <label for="ce-end-date">End Date</label>
+            <input type="date" id="ce-end-date" />
+            <span class="field-error" id="ce-end-date-error"></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ce-time">Start Time</label>
+          <input type="time" id="ce-time" />
+          <span class="field-error" id="ce-time-error"></span>
+        </div>
+        <div class="form-group" id="ce-dest-group" style="display:none;">
+          <label for="ce-destination">Trip Destination</label>
+          <input type="text" id="ce-destination" placeholder="Manali, Himachal Pradesh" />
+          <span class="field-error" id="ce-destination-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="ce-location">Location / Venue <small class="hint" id="ce-loc-hint"></small></label>
+          <input type="text" id="ce-location" placeholder="Innovation Lab, Block C" />
+          <span class="field-error" id="ce-location-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="ce-desc">Description</label>
+          <textarea id="ce-desc" rows="3" placeholder="Describe what attendees will learn or build…"></textarea>
+          <span class="field-error" id="ce-desc-error"></span>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ce-seats">Total Seats</label>
+            <input type="number" id="ce-seats" min="1" placeholder="100" />
+            <span class="field-error" id="ce-seats-error"></span>
+          </div>
+          <div class="form-group form-group--check">
+            <label class="check-label">
+              <input type="checkbox" id="ce-paid" />
+              Paid Event?
+            </label>
+          </div>
+        </div>
+        <div class="form-group form-group--check">
+          <label class="check-label">
+            <input type="checkbox" id="ce-dl" />
+            🎓 Duty Leave (DL) available for this event
+          </label>
+        </div>
+        <div class="form-group" id="ce-price-group" style="display:none;">
+          <label for="ce-price" id="ce-price-label">Entry Fee (₹)</label>
+          <input type="number" id="ce-price" min="0" placeholder="299" />
+        </div>
+        <span class="field-error" id="ce-form-error"></span>
+        <button type="submit" class="register-btn" id="ce-submit-btn">Publish Event 🚀</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ── Registrants Modal ── -->
+  <div class="modal" id="registrants-modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-box modal-box--wide">
+      <button class="modal-close">✕</button>
+      <h2 class="modal-title" id="registrants-event-title">Registrants</h2>
+      <div class="registrants-toolbar">
+        <span id="registrants-count">0 registered</span>
+        <button class="export-btn" id="export-csv-btn" type="button">⬇ Export CSV</button>
+      </div>
+      <div id="registrants-list" class="registrants-list"></div>
+    </div>
+  </div>
+
+  <script src='shared.js'></script>
+  <script src='organizer.js'></script>
+</body>
+</html>

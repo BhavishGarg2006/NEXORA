@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Nexora – Campus Events & Hackathons</title>
+  <link rel='preconnect' href='https://fonts.googleapis.com'>
+  <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+  <link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap' rel='stylesheet'>
+  <link rel='stylesheet' href='style2.css'>
+</head>
+<body>
+
+  <!-- ── Toast Container ── -->
+  <div id="toast-container"></div>
+
+  <!-- ──────────────────────────────────────────────────── -->
+  <!-- NAVBAR                                              -->
+  <!-- ──────────────────────────────────────────────────── -->
+  <nav class='navbar'>
+    <div class='logo'>
+      <a href="#"><img src="LOGO_NEXORA.png" alt="Nexora" height="50" width="60"></a>
+    </div>
+
+    <button id="mobile-nav-toggle" class="mobile-toggle" aria-label="Toggle menu">☰</button>
+
+    <ul class='nav-links'>
+      <li><a href='#'>Home</a></li>
+      <li><a href='#ongoing'>Ongoing</a></li>
+      <li><a href='#events'>Upcoming</a></li>
+      <li><a href='#hackathons'>Hackathons</a></li>
+      <li><a href='#trips' class="trip-link">Trips</a></li>
+      <li><a href='#duty-leave' class="dl-link">Duty Leave (DL)</a></li>
+      <li><a href='#experiences'>Experiences</a></li>
+      <li><a href='#contact'>Contact</a></li>
+      <li><a href='organizer.html' class="organizer-link">Organizer Portal 🔒</a></li>
+    </ul>
+
+    <div class="nav-auth">
+      <button id="nav-login-btn" class='login-btn'>Login</button>
+      <div id="nav-user-badge" class="user-badge" style="display:none;">
+        <span id="nav-user-name">User</span>
+        <button id="my-reg-btn" class="badge-action" title="My Registrations">🎟</button>
+        <button id="logout-btn" class="badge-action logout" title="Logout">⏻</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ──────────────────────────────────────────────────── -->
+  <!-- HERO                                                 -->
+  <!-- ──────────────────────────────────────────────────── -->
+  <section class='hero'>
+    <div class='hero-inner'>
+      <div class='hero-content'>
+        <h1>Discover Campus Events &amp; Hackathons with Nexora</h1>
+        <p>Stay connected with workshops, hackathons, technical fests, campus trips and innovation events happening across campus.</p>
+        <div class='hero-buttons'>
+          <a href='#events' class='btn primary'>Explore Events</a>
+          <a href='organizer.html' class='btn secondary'>Organizer Portal</a>
+        </div>
+      </div>
+      <div class='hero-image'>
+        <img src="NEXORA_BG.jpg" alt="Nexora campus events illustration" height="400px" width="500px"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────────────────────── -->
+  <!-- LIVE EVENT OVERVIEW                                  -->
+  <!-- ──────────────────────────────────────────────────── -->
+  <section id="stats-section" class="stats-section">
+    <div class="stat-item">
+      <div class="stat-number" id="overview-total">0</div>
+      <div class="stat-label">Total Events</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" id="overview-ongoing">0</div>
+      <div class="stat-label">Ongoing Now</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" id="overview-upcoming">0</div>
+      <div class="stat-label">Upcoming Events</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" id="overview-hackathons">0</div>
+      <div class="stat-label">Hackathons</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" id="overview-trips">0</div>
+      <div class="stat-label">Trips</div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────────────────────── -->
+  <!-- ONGOING EVENTS                                       -->
+  <!-- ──────────────────────────────────────────────────── -->
+  <section class='events-section' id='ongoing'>
+    <div class='section-header'>
+      <h2>Ongoing Events <span class="count-badge" id="ongoing-count-badge">0</span></h2>
+      <span class='live-badge'>LIVE</span>
+    </div>
+    <div class='event-grid' id="ongoing-grid">
+      <!-- rendered by JS -->
+    </div>
+  </section>
+   
+  <!-- ──────────────────────────────────────────────────── -->
+  <!-- UPCOMING EVENTS                                      -->
+  <!-- ──────────────────────────────────────────────────── -->
+  <section class='events-section' id='events'>
+    <div class='section-header'>
+      <h2>Upcoming Events <span class="count-badge" id="events-count-badge">0</span></h2>
+      <a href='#' class='view-all'>View All</a>
+    </div>
+    <div class='event-grid' id="events-grid">
+      <!-- rendered by JS -->
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────────────────────── -->
+  <!-- HACKATHONS                                           -->
+  <!-- ──────────────────────────────────────────────────── -->
+  <section class='events-section' id='hackathons'>
+    <div class='section-header'>
+      <h2>Hackathons <span class="count-badge" id="hackathons-count-badge">0</span></h2>
+      <a href='#' class='view-all'>View All</a>
+    </div>
+
+  
+
+    <div class='event-grid' id="hackathons-grid">
+      <!-- rendered by JS -->
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────────────────────── -->
+  <!-- TRIPS                                                -->
+  <!-- ──────────────────────────────────────────────────── -->
+  <section class='events-section trips-section' id='trips'>
+    <div class='section-header'>
+      <div>
+        <h2>Trips <span class="count-badge" id="trips-count-badge">0</span></h2>
+        <p class="section-sub">Campus trips and tours. All trips are paid, so book your seat early.</p>
+      </div>
+      <span class='trip-badge'>✈ PAID</span>
+    </div>
+    <div class='event-grid' id="trips-grid">
+      <!-- rendered by JS -->
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────────────────────── -->
+  <!-- DUTY LEAVE EVENTS                                    -->
+  <!-- ──────────────────────────────────────────────────── -->
+  <section class='events-section dl-section' id='duty-leave'>
+    <div class='section-header'>
+      <div>
+        <h2>Duty Leave (DL) Events <span class="count-badge" id="dl-count-badge">0</span></h2>
+        <p class="section-sub">Events where attendance is covered by Duty Leave. Register and get your DL approved.</p>
+      </div>
+      <span class='dl-badge'>DL</span>
+    </div>
+    <div class='event-grid' id="dl-grid">
+      <!-- rendered by JS -->
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────────────────────── -->
+  <!-- EXPERIENCES                                          -->
+  <!-- ──────────────────────────────────────────────────── -->
+  <section class='events-section' id='experiences'>
+    <div class='section-header'>
+      <div>
+        <h2>Event Experiences <span class="count-badge" id="exp-count-badge">0</span></h2>
+        <p class="section-sub">Students and organizers share photos and how the event went.</p>
+      </div>
+      <button class="btn primary" id="share-exp-btn">📸 Share Your Experience</button>
+    </div>
+    <div class='exp-grid' id="exp-grid">
+      <!-- rendered by JS -->
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────────────────────── -->
+  <!-- FEATURES                                             -->
+  <!-- ──────────────────────────────────────────────────── -->
+  <section class='features'>
+    <div class='feature-card'>
+      <div class="feature-icon">🚀</div>
+      <h3>Easy Registration</h3>
+      <p>Register for events in seconds with a streamlined form. Get a confirmation instantly.</p>
+    </div>
+    <div class='feature-card'>
+      <div class="feature-icon">🤝</div>
+      <h3>Team Formation</h3>
+      <p>Find teammates for hackathons and competitions with our built-in team builder.</p>
+    </div>
+    <div class='feature-card'>
+      <div class="feature-icon">🔔</div>
+      <h3>Live Updates</h3>
+      <p>Receive announcements and schedule updates the moment they happen.</p>
+    </div>
+
+  </section>
+
+  <!-- ──────────────────────────────────────────────────── -->
+  <!-- CONTACT                                              -->
+  <!-- ──────────────────────────────────────────────────── -->
+  <section class="contact-section" id="contact">
+    <div class="contact-inner">
+      <h2>Contact Us</h2>
+      <p class="contact-sub">Have questions or want to partner with Nexora? Drop us a message.</p>
+      <form id="contact-form" class="contact-form" novalidate>
+        <div class="form-group">
+          <label for="contact-name">Your Name</label>
+          <input type="text" id="contact-name" placeholder="Name" />
+          <span class="field-error" id="contact-name-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="contact-email">Email</label>
+          <input type="email" id="contact-email" placeholder="you@college.edu" />
+          <span class="field-error" id="contact-email-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="contact-msg">Message</label>
+          <textarea id="contact-msg" rows="4" placeholder="Write your message here…"></textarea>
+          <span class="field-error" id="contact-msg-error"></span>
+        </div>
+        <button type="submit" class="register-btn">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────────────────────── -->
+  <!-- FOOTER                                               -->
+  <!-- ──────────────────────────────────────────────────── -->
+  <footer class='footer'>
+    <p class="footer-links">
+      <a href="#">Privacy Policy</a> · <a href="#">Terms</a> · <a href="#contact">Contact</a> · <a href="organizer.html">Organizer Portal</a>
+    </p>
+    <p class="footer-note">Accounts, events, registrations and experiences are stored securely in the Nexora database.</p>
+    <p>© 2026 Nexora.</p>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- MODALS                                                 -->
+  <!-- ══════════════════════════════════════════════════════ -->
+
+  <!-- ── Login / Signup Modal ── -->
+  <div class="modal" id="login-modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-box">
+      <button class="modal-close">✕</button>
+      <h2 class="modal-title">Welcome to Nexora</h2>
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab active" data-mode="login">Login</button>
+        <button type="button" class="auth-tab" data-mode="signup">Sign Up</button>
+      </div>
+      <form id="login-form" novalidate>
+        <div class="form-group" id="login-name-group" style="display:none;">
+          <label for="login-name">Full Name</label>
+          <input type="text" id="login-name" placeholder="Name" autocomplete="name" />
+          <span class="field-error" id="login-name-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" placeholder="you@college.edu" autocomplete="email" />
+          <span class="field-error" id="login-email-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="At least 6 characters" autocomplete="current-password" />
+          <span class="field-error" id="login-password-error"></span>
+        </div>
+        <span class="field-error" id="login-form-error"></span>
+        <button type="submit" class="register-btn" id="login-submit-btn">Login</button>
+      </form>
+      <p class="modal-footnote">Organizing an event instead? <a href="organizer.html">Go to the Organizer Portal →</a></p>
+    </div>
+  </div>
+
+  <!-- ── Registration Modal ── -->
+  <div class="modal" id="register-modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-box">
+      <button class="modal-close">✕</button>
+      <h2 class="modal-title">Register for Event</h2>
+      <div class="reg-event-preview">
+        <strong id="reg-event-title"></strong>
+        <span id="reg-event-meta"></span>
+      </div>
+      <div id="reg-price-block" class="price-notice" style="display:none;">
+        <span>💳 Amount to pay:</span>
+        <strong id="reg-price-amount"></strong>
+      </div>
+      <form id="register-form" novalidate>
+        <div class="form-group">
+          <label for="reg-name">Full Name</label>
+          <input type="text" id="reg-name" placeholder="NAME" readonly />
+          <span class="field-error" id="reg-name-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="reg-email">Email</label>
+          <input type="email" id="reg-email" placeholder="you@college.edu" readonly />
+          <span class="field-error" id="reg-email-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="reg-year">Year of Study</label>
+          <select id="reg-year">
+            <option value="">Select year…</option>
+            <option value="1">1st Year</option>
+            <option value="2">2nd Year</option>
+            <option value="3">3rd Year</option>
+            <option value="4">4th Year</option>
+            <option value="pg">Postgraduate</option>
+          </select>
+          <span class="field-error" id="reg-year-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="reg-branch">Branch / Department</label>
+          <input type="text" id="reg-branch" placeholder="e.g. Computer Science" />
+          <span class="field-error" id="reg-branch-error"></span>
+        </div>
+        <span class="field-error" id="reg-form-error"></span>
+        <button type="submit" class="register-btn" id="reg-submit-btn">Confirm Registration</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ── Success Modal ── -->
+  <div class="modal" id="success-modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-box modal-box--center">
+      <button class="modal-close">✕</button>
+      <div class="success-icon">🎉</div>
+      <h2 class="modal-title">You're Registered!</h2>
+      <p class="modal-sub">You've successfully registered for:</p>
+      <div class="success-details">
+        <p class="success-event-name" id="success-event-title"></p>
+        <p>📅 <span id="success-event-date"></span></p>
+        <p>📍 <span id="success-event-location"></span></p>
+      </div>
+      <p class="modal-sub" id="success-dl-note" style="display:none;">🎓 This is a Duty Leave event. Keep your registration as proof for DL approval.</p>
+      <p class="modal-sub">You can see it anytime under 🎟 My Registrations. See you there! 🚀</p>
+      <button class="register-btn" onclick="closeModal('success-modal')">Done</button>
+    </div>
+  </div>
+
+  <!-- ── My Registrations Modal ── -->
+  <div class="modal" id="my-reg-modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-box modal-box--wide">
+      <button class="modal-close">✕</button>
+      <h2 class="modal-title">My Registrations</h2>
+      <div id="my-reg-list" class="my-reg-list"></div>
+    </div>
+  </div>
+
+  <!-- ── Share Experience Modal ── -->
+  <div class="modal" id="exp-modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-box">
+      <button class="modal-close">✕</button>
+      <h2 class="modal-title">Share Your Experience</h2>
+      <p class="modal-sub">Upload a photo and tell everyone how the event was.</p>
+      <form id="exp-form" novalidate>
+        <div class="form-group">
+          <label for="exp-event">Event</label>
+          <select id="exp-event"></select>
+          <span class="field-error" id="exp-event-error"></span>
+        </div>
+        <div class="form-group">
+          <label>Rating</label>
+          <div class="star-input" id="exp-stars">
+            <button type="button" data-v="1">★</button><button type="button" data-v="2">★</button><button type="button" data-v="3">★</button><button type="button" data-v="4">★</button><button type="button" data-v="5">★</button>
+          </div>
+          <input type="hidden" id="exp-rating" value="" />
+          <span class="field-error" id="exp-rating-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="exp-text">Your experience</label>
+          <textarea id="exp-text" rows="4" maxlength="1000" placeholder="What did you learn? What was the best part?"></textarea>
+          <span class="field-error" id="exp-text-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="exp-photo">Photo (JPG / PNG / WEBP, max 3 MB)</label>
+          <input type="file" id="exp-photo" accept="image/jpeg,image/png,image/webp" />
+          <img id="exp-preview" class="exp-preview" alt="" style="display:none;" />
+          <span class="field-error" id="exp-photo-error"></span>
+        </div>
+        <span class="field-error" id="exp-form-error"></span>
+        <button type="submit" class="register-btn" id="exp-submit-btn">Post Experience</button>
+      </form>
+    </div>
+  </div>
+
+  <script src='shared.js'></script>
+  <script src='script.js'></script>
+</body>
+</html>
